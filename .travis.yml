@@ -7,3 +7,23 @@ before_install:
 
 script:
   - docker run briceth/docker-react npm run test -- --coverage
+
+deploy:
+  provider: elasticBeanstalk
+  region: 'us-west-2'
+  app: 'docker-react'
+  env: 'DockerReact-env'
+  bukcket_name: 'elasticbeanstalk-us-west-2-034445389199'
+  bucket_path: 'docker-react'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: '$AWS_SECRET_KEY'
+
+notifications:
+  email:
+    recipients:
+      - tessierhuort@gmail.com
+    on_success: change
+    on_failure: always
